@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Cœurs animés */
+.heart {
+    position: absolute;
+    color: rgba(255, 77, 109, 0.6);
+    font-size: 20px;
+    animation: float 6s infinite ease-in;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Carte principale */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    width: 320px;
+    animation: appear 1.2s ease;
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 38px;
+    color: #ff4d6d;
+    margin-bottom: 30px;
+}
+
+/* Boutons */
+button {
+    padding: 12px 26px;
+    margin: 10px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.yes {
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255,77,109,0.5);
+}
+
+.yes:hover {
+    transform: scale(1.1);
+}
+
+.no {
+    background: #e0e0e0;
+    color: #555;
+}
+
+.no:hover {
+    transform: scale(0.95);
+}
+
+#response {
+    margin-top: 25px;
+    font-size: 18px;
+    color: #ff4d6d;
+    font-weight: 600;
+  }
