@@ -45,8 +45,10 @@ function moveNoButton() {
     if (!noBtn.classList.contains('fleeing')) {
         noBtn.style.left = `${rect.left}px`;
         noBtn.style.top = `${rect.top}px`;
+        const hadFocus = document.activeElement === noBtn;
         noBtn.classList.add('fleeing');
         document.body.appendChild(noBtn);
+        if (hadFocus) noBtn.focus({ preventScroll: true });
         noBtn.getBoundingClientRect();
     }
 
