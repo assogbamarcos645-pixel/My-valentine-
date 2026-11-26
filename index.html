@@ -2,9 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Une petite question très importante…">
+    <meta name="theme-color" content="#ff4d6d">
     <title>Ma Valentine 💖</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💖</text></svg>">
 
-    <!-- Lien vers le CSS -->
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -17,23 +20,27 @@
 
 <body>
 
-    <!-- Cœurs -->
-    <span class="heart" style="left:10%; animation-delay:0s;">❤️</span>
-    <span class="heart" style="left:25%; animation-delay:1s;">💖</span>
-    <span class="heart" style="left:40%; animation-delay:2s;">💕</span>
-    <span class="heart" style="left:60%; animation-delay:3s;">💗</span>
-    <span class="heart" style="left:80%; animation-delay:4s;">❤️</span>
+    <div class="hearts" aria-hidden="true"></div>
 
-    <div class="card">
-        <h1>Veux-tu être ma Valentine ? 💕</h1>
+    <main class="card">
+        <section class="question" id="question">
+            <div class="emoji" aria-hidden="true">💌</div>
+            <h1>Veux-tu être ma Valentine ?</h1>
+            <p class="subtitle" id="subtitle">Réfléchis bien… 💕</p>
 
-        <button class="yes" onclick="oui()">Oui 💖</button>
-        <button class="no" onclick="non()">Non 💔</button>
+            <div class="buttons">
+                <button type="button" class="yes" id="yes">Oui 💖</button>
+                <button type="button" class="no" id="no">Non 💔</button>
+            </div>
+        </section>
 
-        <div id="response"></div>
-    </div>
+        <section class="celebration" id="celebration" hidden>
+            <div class="emoji big" aria-hidden="true">🥰</div>
+            <h1>Youpiii !</h1>
+            <p class="subtitle">Je savais que tu dirais oui 💖<br>Tu rends ma vie plus belle.</p>
+        </section>
+    </main>
 
-    <!-- Lien vers le JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
