@@ -165,7 +165,6 @@ button:focus-visible {
 .no.fleeing {
     position: fixed;
     z-index: 2;
-    transition: left 0.3s ease, top 0.3s ease;
 }
 
 /* Célébration */

@@ -36,30 +36,20 @@ function createFloatingHearts() {
     }
 }
 
-function moveNoButton() {
+const yesScaleFor = (attempts) => Math.min(1 + attempts * 0.12, 1.8);
+
+function placeNoButton(nextYesScale) {
     const margin = 12;
     const rect = noBtn.getBoundingClientRect();
     const maxX = window.innerWidth - rect.width - margin;
     const maxY = window.innerHeight - rect.height - margin;
 
-    if (!noBtn.classList.contains('fleeing')) {
-        noBtn.style.left = `${rect.left}px`;
-        noBtn.style.top = `${rect.top}px`;
-        const hadFocus = document.activeElement === noBtn;
-        noBtn.classList.add('fleeing');
-        document.body.appendChild(noBtn);
-        if (hadFocus) noBtn.focus({ preventScroll: true });
-        noBtn.getBoundingClientRect();
-    }
-
-    const currentScale = Math.min(1 + noAttempts * 0.12, 1.8);
-    const nextScale = Math.min(1 + (noAttempts + 1) * 0.12, 1.8);
     const yesRect = yesBtn.getBoundingClientRect();
-    const growth = nextScale / currentScale;
+    const growth = nextYesScale / yesScaleFor(noAttempts);
     const centerX = yesRect.left + yesRect.width / 2;
     const centerY = yesRect.top + yesRect.height / 2;
-    const halfW = (yesRect.width * growth) / 2 + 16;
-    const halfH = (yesRect.height * growth) / 2 + 16;
+    const halfW = (yesRect.width * Math.max(growth, 1)) / 2 + 16;
+    const halfH = (yesRect.height * Math.max(growth, 1)) / 2 + 16;
     const overlapsYes = (x, y) =>
         x < centerX + halfW && x + rect.width > centerX - halfW &&
         y < centerY + halfH && y + rect.height > centerY - halfH;
@@ -75,10 +65,31 @@ function moveNoButton() {
 
     noBtn.style.left = `${x}px`;
     noBtn.style.top = `${y}px`;
+}
+
+let lastMoveTime = 0;
+
+function moveNoButton() {
+    const now = performance.now();
+    if (now - lastMoveTime < 250) return;
+    lastMoveTime = now;
+
+    if (!noBtn.classList.contains('fleeing')) {
+        const rect = noBtn.getBoundingClientRect();
+        noBtn.style.left = `${rect.left}px`;
+        noBtn.style.top = `${rect.top}px`;
+        const hadFocus = document.activeElement === noBtn;
+        noBtn.classList.add('fleeing');
+        document.body.appendChild(noBtn);
+        if (hadFocus) noBtn.focus({ preventScroll: true });
+    }
+
+    const nextYesScale = yesScaleFor(noAttempts + 1);
+    placeNoButton(nextYesScale);
 
     subtitle.textContent = noMessages[noAttempts % noMessages.length];
     noAttempts++;
-    yesBtn.style.setProperty('--yes-scale', nextScale);
+    yesBtn.style.setProperty('--yes-scale', nextYesScale);
 }
 
 function burstHearts(originX, originY) {
@@ -123,9 +134,7 @@ yesBtn.addEventListener('click', sayYes);
 
 window.addEventListener('resize', () => {
     if (noBtn.classList.contains('fleeing')) {
-        const rect = noBtn.getBoundingClientRect();
-        noBtn.style.left = `${Math.min(rect.left, window.innerWidth - rect.width - 12)}px`;
-        noBtn.style.top = `${Math.min(rect.top, window.innerHeight - rect.height - 12)}px`;
+        placeNoButton(yesScaleFor(noAttempts));
     }
 });
 
