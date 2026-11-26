@@ -106,6 +106,7 @@ function sayYes() {
     noBtn.remove();
     question.hidden = true;
     celebration.hidden = false;
+    celebration.focus();
     document.title = 'Elle a dit oui ! 💖';
 }
 
