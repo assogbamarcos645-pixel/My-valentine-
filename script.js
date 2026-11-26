@@ -132,6 +132,16 @@ noBtn.addEventListener('click', (event) => {
 });
 yesBtn.addEventListener('click', sayYes);
 
+window.addEventListener('scroll', () => {
+    if (!noBtn.classList.contains('fleeing')) return;
+    const n = noBtn.getBoundingClientRect();
+    const y = yesBtn.getBoundingClientRect();
+    const gap = 16;
+    const covers = n.left < y.right + gap && n.right > y.left - gap &&
+        n.top < y.bottom + gap && n.bottom > y.top - gap;
+    if (covers) placeNoButton(yesScaleFor(noAttempts));
+}, { passive: true });
+
 window.addEventListener('resize', () => {
     if (noBtn.classList.contains('fleeing')) {
         placeNoButton(yesScaleFor(noAttempts));
