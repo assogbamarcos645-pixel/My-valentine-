@@ -46,8 +46,21 @@ function moveNoButton() {
         noBtn.style.left = `${rect.left}px`;
         noBtn.style.top = `${rect.top}px`;
         noBtn.classList.add('fleeing');
+        document.body.appendChild(noBtn);
         noBtn.getBoundingClientRect();
     }
+
+    const currentScale = Math.min(1 + noAttempts * 0.12, 1.8);
+    const nextScale = Math.min(1 + (noAttempts + 1) * 0.12, 1.8);
+    const yesRect = yesBtn.getBoundingClientRect();
+    const growth = nextScale / currentScale;
+    const centerX = yesRect.left + yesRect.width / 2;
+    const centerY = yesRect.top + yesRect.height / 2;
+    const halfW = (yesRect.width * growth) / 2 + 16;
+    const halfH = (yesRect.height * growth) / 2 + 16;
+    const overlapsYes = (x, y) =>
+        x < centerX + halfW && x + rect.width > centerX - halfW &&
+        y < centerY + halfH && y + rect.height > centerY - halfH;
 
     let x;
     let y;
@@ -56,14 +69,14 @@ function moveNoButton() {
         x = random(margin, Math.max(margin, maxX));
         y = random(margin, Math.max(margin, maxY));
         tries++;
-    } while (Math.hypot(x - rect.left, y - rect.top) < 120 && tries < 20);
+    } while ((overlapsYes(x, y) || Math.hypot(x - rect.left, y - rect.top) < 120) && tries < 50);
 
     noBtn.style.left = `${x}px`;
     noBtn.style.top = `${y}px`;
 
     subtitle.textContent = noMessages[noAttempts % noMessages.length];
     noAttempts++;
-    yesBtn.style.setProperty('--yes-scale', Math.min(1 + noAttempts * 0.12, 1.8));
+    yesBtn.style.setProperty('--yes-scale', nextScale);
 }
 
 function burstHearts(originX, originY) {
